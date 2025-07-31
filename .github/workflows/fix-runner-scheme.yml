@@ -1,0 +1,36 @@
+name: Fix Runner Scheme
+
+on:
+  workflow_dispatch:  # You run this manually from GitHub Actions tab
+
+jobs:
+  share-runner-scheme:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+
+      - name: Open Xcode and share Runner scheme
+        run: |
+          cd ios
+          pod install
+          open Runner.xcworkspace
+          sleep 10  # Give Xcode time to initialize things
+          defaults write com.apple.dt.Xcode IDESchemeSharingAutomaticallyEnabled -bool YES
+          defaults write com.apple.dt.Xcode IDESchemeAutoCreateSchemes -bool YES
+          xcodebuild -list
+          git status
+
+      - name: Commit shared scheme (if changed)
+        run: |
+          git config --global user.email "ci-bot@github.com"
+          git config --global user.name "GitHub Actions"
+          git add ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme
+          git commit -m "Fix: Share Runner.xcscheme from macOS GitHub Action" || echo "No changes to commit"
+          git push
