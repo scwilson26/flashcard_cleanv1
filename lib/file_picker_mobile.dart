@@ -5,11 +5,15 @@ Future<Map<String, dynamic>?> pickPdfFile() async {
   final result = await FilePicker.platform.pickFiles(
     type: FileType.custom,
     allowedExtensions: ['pdf'],
+    withData: true, // 👈 this is the key!
   );
 
   if (result != null && result.files.isNotEmpty) {
     final file = result.files.first;
-    return {'bytes': file.bytes, 'name': file.name};
+    return {
+      'bytes': file.bytes, 
+      'name': file.name
+    };
   }
 
   return null;

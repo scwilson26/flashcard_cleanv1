@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 import 'dart:async';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 // Conditional imports
 import 'file_download_stub.dart'
@@ -46,24 +48,46 @@ class _FlashcardUploaderState extends State<FlashcardUploader> {
   bool showDownloadButton = false;
 
   void selectAndLoadFile() async {
+    print("📥 Attempting to pick file...");
     try {
       final result = await pickPdfFile();
       if (result != null) {
+        print("✅ File picked: ${result['name']}, size: ${result['bytes']?.length ?? 0} bytes");
         setState(() {
           fileBytes = result['bytes'];
           fileName = result['name'];
           status = "Selected: $fileName";
           showDownloadButton = false;
         });
+      } else {
+        print("⚠️ No file selected");
       }
     } catch (e) {
       setState(() => status = "❌ File pick failed");
-      print("File pick error: $e");
+      print("❌ File pick error: $e");
+    }
+  }
+
+  Uri getBackendUri() {
+    if (kIsWeb) {
+      return Uri.parse('http://127.0.0.1:8000/generate-study-pack');
+    } else if (Platform.isAndroid) {
+      return Uri.parse('http://10.0.2.2:8000/generate-study-pack');
+    } else {
+      return Uri.parse('http://127.0.0.1:8000/generate-study-pack');
     }
   }
 
   Future<void> generateZip() async {
-    if (fileBytes == null) return;
+    print("🧠 generateZip() called");
+
+    if (fileBytes == null) {
+      print("🚫 No file loaded – skipping upload");
+      return;
+    }
+
+    final uri = getBackendUri();
+    print("📡 Sending request to: $uri");
 
     setState(() {
       status = "Uploading...";
@@ -79,7 +103,6 @@ class _FlashcardUploaderState extends State<FlashcardUploader> {
       });
     });
 
-    final uri = Uri.parse('http://127.0.0.1:8000/generate-study-pack');
     final request = http.MultipartRequest('POST', uri);
     request.files.add(http.MultipartFile.fromBytes('file', fileBytes!, filename: fileName));
 
@@ -90,7 +113,10 @@ class _FlashcardUploaderState extends State<FlashcardUploader> {
       progressTimer.cancel();
       setState(() => uploadProgress = 1.0);
 
+      print("📬 Response status: ${streamedRequest.statusCode}");
+
       if (streamedRequest.statusCode == 200) {
+        print("✅ ZIP received");
         await handleFileDownload(data);
 
         await Future.delayed(const Duration(milliseconds: 500));
@@ -104,6 +130,7 @@ class _FlashcardUploaderState extends State<FlashcardUploader> {
           status = "❌ Failed to generate.";
           uploadProgress = 0.0;
         });
+        print("❌ Server returned error status");
       }
     } catch (e) {
       progressTimer.cancel();
