@@ -1,17 +1,32 @@
-name: flashcard_clean
-description: Your app description here
-version: 1.0.0+1
+name: Fix Runner Scheme
 
-environment:
-  sdk: ">=3.0.0 <4.0.0"
+on:
+  workflow_dispatch:
 
-dependencies:
-  flutter:
-    sdk: flutter
-  # your other dependencies
-  cupertino_icons: ^1.0.2
+jobs:
+  share-runner-scheme:
+    runs-on: macos-latest
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: 2.0.1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Generate shared Xcode scheme
+        run: |
+          cd ios
+          xcodebuild -project Runner.xcodeproj -scheme Runner -showBuildSettings
+          mkdir -p Runner.xcodeproj/xcshareddata/xcschemes
+          cp Runner.xcodeproj/xcuserdata/*.xcuserdatad/xcschemes/Runner.xcscheme Runner.xcodeproj/xcshareddata/xcschemes/
+
+      - name: Commit shared scheme
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme
+          git commit -m "Add shared Xcode scheme"
+          git push
