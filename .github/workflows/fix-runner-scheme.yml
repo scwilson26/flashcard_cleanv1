@@ -1,18 +1,17 @@
-name: fix-runner-scheme
-on:
-  workflow_dispatch:
+name: flashcard_clean
+description: Your app description here
+version: 1.0.0+1
 
-jobs:
-  share-runner-scheme:
-    runs-on: macos-14  # macOS with Xcode 15.x
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+environment:
+  sdk: ">=3.0.0 <4.0.0"
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.13.9'
+dependencies:
+  flutter:
+    sdk: flutter
+  # your other dependencies
+  cupertino_icons: ^1.0.2
 
-      - name: Build iOS to regenerate Runner.xcscheme
-        run: flutter build ios --debug
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: 2.0.1
