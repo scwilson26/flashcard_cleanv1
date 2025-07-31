@@ -354,7 +354,7 @@
 				VALIDATE_PRODUCT = YES;
 			}
 			DEVELOPMENT_TEAM = 24LAK24LM8;
-			CODE_SIGN_STYLE = Manual;;
+			CODE_SIGN_STYLE = Manual;
 			name = Profile;
 		};
 		249021D4217E4FDB00AE95B9 /* Profile */ = {
@@ -377,7 +377,7 @@
 				VERSIONING_SYSTEM = "apple-generic";
 			}
 			DEVELOPMENT_TEAM = 24LAK24LM8;
-			CODE_SIGN_STYLE = Manual;;
+			CODE_SIGN_STYLE = Manual;
 			name = Profile;
 		};
 		331C8088294A63A400263BE5 /* Debug */ = {
@@ -395,7 +395,7 @@
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
 			}
-			DEVELOPMENT_TEAM = 24LAK24LM8;;
+			DEVELOPMENT_TEAM = 24LAK24LM8;
 			name = Debug;
 		};
 		331C8089294A63A400263BE5 /* Release */ = {
@@ -411,7 +411,7 @@
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
 			}
-			DEVELOPMENT_TEAM = 24LAK24LM8;;
+			DEVELOPMENT_TEAM = 24LAK24LM8;
 			name = Release;
 		};
 		331C808A294A63A400263BE5 /* Profile */ = {
@@ -427,7 +427,7 @@
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Runner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Runner";
 			}
-			DEVELOPMENT_TEAM = 24LAK24LM8;;
+			DEVELOPMENT_TEAM = 24LAK24LM8;
 			name = Profile;
 		};
 		97C147031CF9000F007C117D /* Debug */ = {
@@ -486,7 +486,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			}
 			DEVELOPMENT_TEAM = 24LAK24LM8;
-			CODE_SIGN_STYLE = Manual;;
+			CODE_SIGN_STYLE = Manual;
 			name = Debug;
 		};
 		97C147041CF9000F007C117D /* Release */ = {
@@ -542,7 +542,7 @@
 				VALIDATE_PRODUCT = YES;
 			}
 			DEVELOPMENT_TEAM = 24LAK24LM8;
-			CODE_SIGN_STYLE = Manual;;
+			CODE_SIGN_STYLE = Manual;
 			name = Release;
 		};
 		97C147061CF9000F007C117D /* Debug */ = {
@@ -566,7 +566,7 @@
 				VERSIONING_SYSTEM = "apple-generic";
 			}
 			DEVELOPMENT_TEAM = 24LAK24LM8;
-			CODE_SIGN_STYLE = Manual;;
+			CODE_SIGN_STYLE = Manual;
 			name = Debug;
 		};
 		97C147071CF9000F007C117D /* Release */ = {
@@ -589,7 +589,7 @@
 				VERSIONING_SYSTEM = "apple-generic";
 			}
 			DEVELOPMENT_TEAM = 24LAK24LM8;
-			CODE_SIGN_STYLE = Manual;;
+			CODE_SIGN_STYLE = Manual;
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
